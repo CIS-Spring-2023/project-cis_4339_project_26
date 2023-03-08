@@ -3,69 +3,48 @@ import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
+import Chart from 'chart.js/auto'
 
 export default {
-  components: {
-    AttendanceChart
-  },
-  data() {
-    return {
-      recentEvents: [],
-      labels: [],
-      chartData: [],
-      loading: false,
-      error: null
-    }
-  },
   mounted() {
-    this.getAttendanceData()
-  },
-  methods: {
-    async getAttendanceData() {
-      try {
-        this.error = null
-        this.loading = true
-        const response = await axios.get(`${apiURL}/events/attendance`)
-        this.recentEvents = response.data
-        this.labels = response.data.map(
-          (item) => `${item.name} (${this.formattedDate(item.date)})`
-        )
-        this.chartData = response.data.map((item) => item.attendees.length)
-      } catch (err) {
-        if (err.response) {
-          // client received an error response (5xx, 4xx)
-          this.error = {
-            title: 'Server Response',
-            message: err.message
+    const ctx = document.getElementById('myChart')
+
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['77494 ', '77449 ', '77407 ', '77386 ', '77433 ', '77099 '],
+        datasets: [
+          {
+            label: '# of Votes',
+            data: [24, 19, 21, 26, 23, 17],
+            backgroundColor: [
+              'rgba(255, 0, 0, 0.7)',
+              'rgba(255, 0, 0, 0.7)',
+              'rgba(255, 0, 0, 0.7)',
+              'rgba(255, 0, 0, 0.7)',
+              'rgba(255, 0, 0, 0.7)',
+              'rgba(255, 0, 0, 0.7)'
+            ],
+            borderColor: [
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
           }
-        } else if (err.request) {
-          // client never received a response, or request never left
-          this.error = {
-            title: 'Unable to Reach Server',
-            message: err.message
-          }
-        } else {
-          // There's probably an error in your code
-          this.error = {
-            title: 'Application Error',
-            message: err.message
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
           }
         }
       }
-      this.loading = false
-    },
-    formattedDate(datetimeDB) {
-      const dt = DateTime.fromISO(datetimeDB, {
-        zone: 'utc'
-      })
-      return dt
-        .setZone(DateTime.now().zoneName, { keepLocalTime: true })
-        .toLocaleString()
-    },
-    // method to allow click through table to event details
-    editEvent(eventID) {
-      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
-    }
+    })
   }
 }
 </script>
@@ -103,14 +82,39 @@ export default {
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
               </tr>
             </tbody>
+
+            <tbody class="divide-y divide-gray-300">
+              <tr>
+                <td class="p-2 text-left">Event 1</td>
+                <td class="p-2 text-left">3/3/2023</td>
+                <td class="p-2 text-left">3</td>
+              </tr>
+              <tr>
+                <td class="p-2 text-left">Event 2</td>
+                <td class="p-2 text-left">3/25/2023</td>
+                <td class="p-2 text-left">5</td>
+              </tr>
+              <tr>
+                <td class="p-2 text-left">Event 3</td>
+                <td class="p-2 text-left">4/7/2023</td>
+                <td class="p-2 text-left">7</td>
+              </tr>
+              <tr>
+                <td class="p-2 text-left">Event 4</td>
+                <td class="p-2 text-left">4/18/2023</td>
+                <td class="p-2 text-left">6</td>
+              </tr>
+              <tr>
+                <td class="p-2 text-left">Event 5</td>
+                <td class="p-2 text-left">4/30/2023</td>
+                <td class="p-2 text-left">4</td>
+              </tr>
+            </tbody>
           </table>
           <div>
-            <AttendanceChart
-              v-if="!loading && !error"
-              :label="labels"
-              :chart-data="chartData"
-            ></AttendanceChart>
-
+            <br />
+            <canvas id="myChart" width="20" height="20"></canvas>
+            <br /><br />
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
               <p
