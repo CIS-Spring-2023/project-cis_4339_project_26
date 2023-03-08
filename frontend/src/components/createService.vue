@@ -13,11 +13,11 @@ export default {
         return {
             service: {
                 name:''
-            },
-            services: [
-                "gotcha",
-                "howdy"
-            ]
+            }
+            // services: [
+            //     "gotcha",
+            //     "howdy"
+            // ]
         }
     },
    methods: {
@@ -26,7 +26,7 @@ export default {
       const isFormCorrect = await this.v$.$validate()
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
-        // alert('Service has been successfully added.')
+        alert('Service has been successfully added.')
         // this.$router.push({ name: 'findevents' }) 
         this.services.push(this.service.name)
     //     axios
@@ -46,7 +46,7 @@ validations() {
     return {
         service : {
             name: { required }
-            }
+            },
         }
     }
 }
@@ -85,7 +85,7 @@ validations() {
             
             </div>
         </form>
-        {{ services }}
+        <!-- {{ services }} -->
     </div>
     </main>
 </template>
