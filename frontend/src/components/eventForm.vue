@@ -23,7 +23,11 @@ export default {
           zip: ''
         },
         description: ''
-      }
+      },
+      services: [
+        "fufu",
+        "lala"
+    ]
     }
   },
   methods: {
@@ -42,7 +46,12 @@ export default {
             console.log(error)
           })
       }
-    }
+    },
+    getServices() {
+      axios.get(`${apiURL}/Services`).then((res) => {
+        this.queryData = res.data
+      })
+    },
   },
   // sets validations for the various data properties
   validations() {
@@ -133,63 +142,29 @@ export default {
           <div></div>
           <div></div>
           <div></div>
-          <!-- form field -->
-          <div class="flex flex-col grid-cols-3">
-            <label>Services Offered at Event</label>
-            <div>
-              <label for="familySupport" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="familySupport"
-                  value="Family Support"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Family Support</span>
-              </label>
-            </div>
-            <div>
-              <label for="adultEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="adultEducation"
-                  value="Adult Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Adult Education</span>
-              </label>
-            </div>
-            <div>
-              <label for="youthServices" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="youthServices"
-                  value="Youth Services Program"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Youth Services Program</span>
-              </label>
-            </div>
-            <div>
-              <label for="childhoodEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="childhoodEducation"
-                  value="Early Childhood Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Early Childhood Education</span>
-              </label>
-            </div>
+                  
+            
+            <table class="flex flex-col grid-cols-3">
+              <label>Services Offered at Event</label>
+  <tbody>
+    <tr v-for="service in services" :key="service">
+      <td>
+        <input  
+          type="checkbox"
+          :id="service"
+          :value="service"
+          class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </td>
+      <td>
+        {{ service }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+            
           </div>
-        </div>
+         
 
         <!-- grid container -->
         <div
