@@ -40,6 +40,11 @@ const routes = [
     component: () => import('../components/findEvents.vue')
   },
   {
+    path: '/updateservices',
+    name: 'updateservicess',
+    component: () => import('../components/updateServices.vue')
+  },
+  {
     path: '/eventdetails/:id',
     name: 'eventdetails',
     props: true,
