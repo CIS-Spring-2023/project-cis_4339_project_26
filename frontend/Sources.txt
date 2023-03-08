@@ -1,0 +1,3 @@
+Sources used throughout the Frontend portion of the project: 
+
+https://www.youtube.com/watch?v=aw8d2f3xfPA - used in creating the bar chart on the dashboard 
