@@ -44,8 +44,6 @@ const routes = [
     name: 'manageservices',
     component: () => import('../components/manageServices.vue')
   },
-
-
   {
     path: '/listservices',
     name: 'listservices',
