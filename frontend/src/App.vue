@@ -1,19 +1,22 @@
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedInUser";
+
 
 export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Dataplatform'
+      orgName: 'Dataplatform',
+      allowed: useLoggedInUserStore()
     }
   },
   created() {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
     })
-  }
+  },
 }
 </script>
 <template>
@@ -23,7 +26,9 @@ export default {
         <section class="text-center">
           <img class="m-auto" src="@\assets\DanPersona.svg" />
         </section>
-        <nav class="mt-10">
+        <!-- This allows us to hide the navbar for the login page = -->
+        <nav v-if="!$route.meta.hideNavbar" class="mt-10">
+          <!-- <nav class="mt-10"> -->
           <ul class="flex flex-col gap-4">
             <li>
               <router-link to="/">
