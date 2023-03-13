@@ -49,6 +49,27 @@ const routes = [
     meta: { requiresLog: true }
   },
   {
+    path: '/createservices',
+    name: 'createservices',
+    component: () => import('../components/createServices.vue')
+  },
+  {
+    path: '/manageservices',
+    name: 'manageservices',
+    component: () => import('../components/manageServices.vue')
+  },
+  {
+    path: '/listservices',
+    name: 'listservices',
+    component: () => import('../components/listServices.vue')
+  },
+  {
+    path: '/updateservices',
+    name: 'updateservices',
+    component: () => import('../components/updateServices.vue')
+  },
+
+  {
     path: '/eventdetails/:id',
     name: 'eventdetails',
     props: true,
