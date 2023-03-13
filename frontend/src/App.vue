@@ -38,7 +38,7 @@ export default {
           <!-- <nav class="mt-10"> -->
           <ul class="flex flex-col gap-4">
             <li> <!-- Added dashboard link to make separate than login -->
-              <router-link to="/dashboard">
+              <router-link to="/home">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
