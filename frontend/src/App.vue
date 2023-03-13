@@ -2,6 +2,7 @@
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 import { useLoggedInUserStore } from "@/store/loggedInUser";
+import { storeToRefs } from 'pinia';
 
 
 export default {
@@ -13,10 +14,16 @@ export default {
     }
   },
   created() {
-    axios.get(`${apiURL}/org`).then((res) => {
-      this.orgName = res.data.name
-    })
-  },
+    // axios.get(`${apiURL}/org`).then((res) => {
+    //   this.orgName = res.data.name
+    // })
+  }, 
+  methods: {
+    logout() {
+      allowed.role = ''
+
+    }   
+}
 }
 </script>
 <template>
@@ -41,7 +48,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/intakeform">
+              <router-link v-if="allowed.role === 'editor'" to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -51,7 +58,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/eventform">
+              <router-link v-if="allowed.role === 'editor'" to="/eventform">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -78,6 +85,17 @@ export default {
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  on-click="logout()"
+                  >people</span
+                >
+               Logout
               </router-link>
             </li>
           </ul>
