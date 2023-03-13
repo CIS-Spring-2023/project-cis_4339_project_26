@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+// testing
 // make all paths and names lowercase for consistency
 const routes = [
   {
