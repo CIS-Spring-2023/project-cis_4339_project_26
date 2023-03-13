@@ -37,8 +37,8 @@ export default {
         <nav v-if="!$route.meta.hideNavbar" class="mt-10">
           <!-- <nav class="mt-10"> -->
           <ul class="flex flex-col gap-4">
-            <li>
-              <router-link to="/">
+            <li> <!-- Added dashboard link to make separate than login -->
+              <router-link to="/dashboard">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
