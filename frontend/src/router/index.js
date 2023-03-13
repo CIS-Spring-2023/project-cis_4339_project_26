@@ -14,7 +14,7 @@ const routes = [
     path: '/home',
     props: true,
     component: () => import('../components/homePage.vue'),
-    
+    meta: { requiresLog: true }
   },
   {
     path: '/intakeform',
@@ -27,6 +27,7 @@ const routes = [
     path: '/findclient',
     name: 'findclient',
     component: () => import('../components/findClient.vue'),
+    meta: { requiresLog: true }
   },
   {
     path: '/updateclient/:id',
@@ -39,14 +40,13 @@ const routes = [
     path: '/eventform',
     name: 'eventform',
     component: () => import('../components/eventForm.vue'),
-    meta: { 
-      requiresAuth: true, 
-    }
+    meta: { requiresAuth: true }
   },
   {
     path: '/findevents',
     name: 'findevents',
-    component: () => import('../components/findEvents.vue')
+    component: () => import('../components/findEvents.vue'),
+    meta: { requiresLog: true }
   },
   {
     path: '/eventdetails/:id',
@@ -74,9 +74,16 @@ router.beforeEach(async(to, from, next)=>{
       next();
     }else{
       alert("You don't have access!")
-      next("/home")
+      next("/")
     }
-  }else{
+    }else if (to.matched.some((record)=>record.meta.requiresLog)){ 
+    if(store.role === 'editor' || store.role === 'viewer'){
+      next();
+    }else{
+      alert("You don't have access!")
+      next('/')
+    }
+  } else {
     next()
   }
 })
