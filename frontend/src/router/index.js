@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useLoggedInUserStore } from "@/store/loggedInUser"
-
+// this page did not get added properly
 // make all paths and names lowercase for consistency
 const routes = [
   { //added login route; 
