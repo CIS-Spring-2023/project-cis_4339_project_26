@@ -1,19 +1,29 @@
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedInUser";
+import { storeToRefs } from 'pinia';
+
 
 export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Dataplatform'
+      orgName: 'Dataplatform',
+      allowed: useLoggedInUserStore()
     }
   },
   created() {
-    axios.get(`${apiURL}/org`).then((res) => {
-      this.orgName = res.data.name
-    })
-  }
+    // axios.get(`${apiURL}/org`).then((res) => {
+    //   this.orgName = res.data.name
+    // })
+  }, 
+  methods: {
+    logout() {
+      allowed.role = ''
+
+    }   
+}
 }
 </script>
 <template>
@@ -23,7 +33,9 @@ export default {
         <section class="text-center">
           <img class="m-auto" src="@\assets\DanPersona.svg" />
         </section>
-        <nav class="mt-10">
+        <!-- This allows us to hide the navbar for the login page = -->
+        <nav v-if="!$route.meta.hideNavbar" class="mt-10">
+          <!-- <nav class="mt-10"> -->
           <ul class="flex flex-col gap-4">
             <li>
               <router-link to="/">
@@ -36,7 +48,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/intakeform">
+              <router-link v-if="allowed.role === 'editor'" to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -46,7 +58,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/eventform">
+              <router-link v-if="allowed.role === 'editor'" to="/eventform">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -73,6 +85,17 @@ export default {
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  on-click="logout()"
+                  >people</span
+                >
+               Logout
               </router-link>
             </li>
           </ul>
