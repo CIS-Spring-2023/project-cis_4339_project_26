@@ -9,8 +9,14 @@ export const useLoggedInUserStore = defineStore({
     return {
       name: "",
       isLoggedIn: false,
+      role:''
     }
   },
+//  getters: {
+//   isAuthorized(state) {
+//     return state.isLoggedIn && state.editor
+//   } 
+// },
   // equivalent to methods in components, perfect to define business logic
   actions: {
     async login(username, password) {
@@ -19,8 +25,9 @@ export const useLoggedInUserStore = defineStore({
         this.$patch({
           isLoggedIn: response.isAllowed,
           name: response.name,
+          role: response.role  //added this role to grab the role to determine if editor or viewer
         })
-        this.$router.push("/home");
+        this.$router.push("/home"); // if it doesn't work, sends back to the login
       } catch(error) {
         console.log(error)
       }
@@ -37,9 +44,29 @@ export const useLoggedInUserStore = defineStore({
 });
 
 //simulate a login - we will later use our backend to handle authentication
+//created 2 different users : viewer and editor
 function apiLogin(u, p) {
-  if (u === "ed" && p === "ed") return Promise.resolve({ isAllowed: true, name: "John Doe" });
-  if (p === "ed") return Promise.resolve({ isAllowed: false });
-  return Promise.reject(new Error("invalid credentials"));
+  let loggedIn = [
+    {
+      name: 'e',
+      password: 'e',
+      role: 'editor'
+    },
+    {
+      name: 'v',
+      password: 'v',
+      role: 'viewer'
+    }
+  ]
+  console.log(loggedIn)
+  for(let i in loggedIn) {
+    if(loggedIn[i].name === u && loggedIn[i].password === p && loggedIn[i].role === 'editor') 
+    return Promise.resolve({ isAllowed:true, role:loggedIn[i].role, name:loggedIn[i].name })
+    if(loggedIn[i].name === u && loggedIn[i].password === p && loggedIn[i].role === 'viewer') 
+    return Promise.resolve({ isAllowed:true, role:loggedIn[i].role, name:loggedIn[i].name })
+  }
+  // if (u === "ed" && p === "ed") return Promise.resolve({ isAllowed: true, name: "John Doe" });
+  // if (p === "ed") return Promise.resolve({ isAllowed: false });
+  return Promise.reject(new Error("invalid credentials")); // this is not working
 }
 
