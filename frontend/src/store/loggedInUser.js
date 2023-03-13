@@ -12,11 +12,6 @@ export const useLoggedInUserStore = defineStore({
       role:''
     }
   },
-//  getters: {
-//   isAuthorized(state) {
-//     return state.isLoggedIn && state.editor
-//   } 
-// },
   // equivalent to methods in components, perfect to define business logic
   actions: {
     async login(username, password) {
