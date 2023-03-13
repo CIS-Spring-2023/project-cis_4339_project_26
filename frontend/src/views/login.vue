@@ -41,6 +41,8 @@ export default {
             store,
         }
     },
+    // I think this could be an easier way to get the code to show certain pages to viewer
+    // I need more time to figure this out
     data() {
         return {
             isAuthorized: false,
