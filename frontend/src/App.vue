@@ -48,25 +48,12 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link v-if="allowed.role === 'editor'" to="/intakeform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >people</span
-                >
-                Client Intake Form
+              <router-link to="/findevents">
+                <span style="position: relative; top: 6px" class="material-icons">search</span>
+                Find Event
               </router-link>
             </li>
-            <li>
-              <router-link v-if="allowed.role === 'editor'" to="/eventform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >event</span
-                >
-                Create Event
-              </router-link>
-            </li>
+            
             <li>
               <router-link to="/findclient">
                 <span style="position: relative; top: 6px" class="material-icons">search</span>
@@ -80,34 +67,38 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/createservices">
+              <router-link v-if="allowed.role === 'editor'" to="/eventform">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >event</span
+                >
+                Create Event
+              </router-link>
+            </li>
+            <li>
+              <router-link v-if="allowed.role === 'editor'" to="/intakeform">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >people</span
+                >
+                Client Intake Form
+              </router-link>
+            </li>
+            <li>
+              <router-link v-if="allowed.role === 'editor'" to="/createservices">
                 <span style="position: relative; top: 6px" class="material-icons">search</span>
                 Create Services
               </router-link>
             </li>
             <li>
-              <router-link to="/manageservices">
+              <router-link v-if="allowed.role === 'editor'" to="/manageservices">
                 <span style="position: relative; top: 6px" class="material-icons">search</span>
                 Manage Services
               </router-link>
             </li>
-            <li>
-              <router-link to="/findevents">
-                <span style="position: relative; top: 6px" class="material-icons">search</span>
-                Find Event
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  on-click="logout()"
-                  >people</span
-                >
-               Logout
-              </router-link>
-            </li>
+           
             <li>
               <router-link to="/">
                 <span
