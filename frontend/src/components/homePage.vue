@@ -1,7 +1,6 @@
 <script>
 import { DateTime } from 'luxon'
 import axios from 'axios'
-import AttendanceChart from './barChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 import Chart from 'chart.js/auto'
 
@@ -10,20 +9,20 @@ export default {
     const ctx = document.getElementById('myChart')
 
     const myChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'doughnut',
       data: {
         labels: ['77494 ', '77449 ', '77407 ', '77386 ', '77433 ', '77099 '],
         datasets: [
           {
-            label: '# of Votes',
-            data: [24, 19, 21, 26, 23, 17],
+            label: '# of Ppl in Zip Code ',
+            data: [4, 19, 21, 29, 23, 17],
             backgroundColor: [
               'rgba(255, 0, 0, 0.7)',
-              'rgba(255, 0, 0, 0.7)',
-              'rgba(255, 0, 0, 0.7)',
-              'rgba(255, 0, 0, 0.7)',
-              'rgba(255, 0, 0, 0.7)',
-              'rgba(255, 0, 0, 0.7)'
+              'rgba(0, 255, 0, 0.7)',
+              'rgba(255, 255, 0, 0.7)',
+              'rgba(255, 0, 255, 0.7)',
+              'rgba(0, 255, 255, 0.7)',
+              'rgba(0, 0, 255, 0.7)'
             ],
             borderColor: [
               'rgba(0, 0, 0, 1)',
@@ -33,17 +32,10 @@ export default {
               'rgba(0, 0, 0, 1)',
               'rgba(0, 0, 0, 1)'
             ],
-            borderWidth: 1
+            borderWidth: .25
           }
         ]
       },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
     })
   }
 }
