@@ -51,24 +51,27 @@ const routes = [
   {
     path: '/createservices',
     name: 'createservices',
-    component: () => import('../components/createServices.vue')
+    component: () => import('../components/createServices.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/manageservices',
     name: 'manageservices',
-    component: () => import('../components/manageServices.vue')
+    component: () => import('../components/manageServices.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/listservices',
     name: 'listservices',
-    component: () => import('../components/listServices.vue')
+    component: () => import('../components/listServices.vue'),
+    meta: { requiresLog: true }
   },
   {
     path: '/updateservices',
     name: 'updateservices',
-    component: () => import('../components/updateServices.vue')
+    component: () => import('../components/updateServices.vue'),
+    meta: { requiresAuth: true }
   },
-
   {
     path: '/eventdetails/:id',
     name: 'eventdetails',
