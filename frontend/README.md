@@ -1,4 +1,7 @@
-# Data Platform Frontend
+ For editor, the username is e and the password is e.
+For viewer, the username is v and the password is v.
+
+Data Platform Frontend
 
 This project uses [VueJS 3](https://vuejs.org/) with [Vite](https://vitejs.dev/) and [TailwindCSS](https://tailwindcss.com/).
 For form validation [Vuelidate](https://vuelidate-next.netlify.app/) is used.
