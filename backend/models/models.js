@@ -18,6 +18,50 @@ const orgDataSchema = new Schema(
     collection: 'org'
   }
 )
+// collection for users
+const userDataSchema = new Schema( 
+  {
+    _id: { type: String, default: uuid.v1 },
+    FirstName: {
+      type: String,
+      required: true
+    },
+    LastName: {
+      type: String,
+      required: true
+    },
+    EmailAddress: {
+      type: String,
+      required: true
+    },
+    PhoneNumber: {
+      type: String,
+      required: true
+    },
+    Address: {
+      Line1: {
+        type: String
+      },
+      Line2: {
+        type: String
+      },
+      City: {
+        type: String,
+        required: true
+      },
+      Zip: {
+        type: String
+      }
+    },
+    DateofBirth: {
+      type: Date,
+      required: true
+    }
+  },
+  {
+    collection: 'user'
+  }
+)
 
 // collection for clients
 const clientDataSchema = new Schema(
@@ -153,8 +197,9 @@ const serviceDataSchema = new Schema(
 const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
+const users = mongoose.model('user', userDataSchema)
 const services = mongoose.model('service', serviceDataSchema)
 
 // package the models in an object to export
-module.exports = { clients, orgs, events, services }
+module.exports = { clients, orgs, events, users, services }
 
