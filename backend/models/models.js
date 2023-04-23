@@ -38,6 +38,10 @@ const userDataSchema = new Schema(
       type: String,
       required: true
     },
+    Role: {
+      type: String,
+      required: true
+    },
     Address: {
       Line1: {
         type: String
@@ -198,8 +202,7 @@ const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
 const users = mongoose.model('user', userDataSchema)
-const services = mongoose.model('service', serviceDataSchema)
+const services = mongoose.model('service', userDataSchema)
 
 // package the models in an object to export
 module.exports = { clients, orgs, events, users, services }
-
