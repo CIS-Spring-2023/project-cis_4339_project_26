@@ -42,23 +42,12 @@ const userDataSchema = new Schema(
       type: String,
       required: true
     },
-    Address: {
-      Line1: {
-        type: String
-      },
-      Line2: {
-        type: String
-      },
-      City: {
-        type: String,
-        required: true
-      },
-      Zip: {
-        type: String
-      }
+    UserName: {
+      type: String,
+      required: true
     },
-    DateofBirth: {
-      type: Date,
+    Password: {
+      type: String,
       required: true
     }
   },
