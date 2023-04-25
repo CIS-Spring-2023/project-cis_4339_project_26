@@ -16,6 +16,7 @@ export default {
   mounted() {
     this.getEvents()
   },
+  
   methods: {
     // better formattedDate
     formattedDate(datetimeDB) {
@@ -39,7 +40,10 @@ export default {
     },
     // abstracted method to get events
     getEvents() {
-      axios.get(`${apiURL}/events`).then((res) => {
+      console.log('heatar')
+      // let apiur = "http://127.0.0.1:3000/events"
+      let apiUR = `${apiURL}/events`
+      axios.get(apiUR).then((res) => {
         this.events = res.data
       })
       window.scrollTo(0, 0)
@@ -153,8 +157,8 @@ export default {
               :key="event._id"
             >
               <td class="p-2 text-left">{{ event.name }}</td>
-              <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
-              <td class="p-2 text-left">{{ event.address.line1 }}</td>
+              <td class="p-2 text-left">{{ formattedDate(event.date) }}</td> 
+              <td class="p-2 text-left">{{ event.address.line1 }}</td> 
             </tr>
           </tbody>
         </table>
