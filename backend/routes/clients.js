@@ -9,7 +9,7 @@ const { clients } = require('../models/models')
 // GET 10 most recent clients for org
 router.get('/', (req, res, next) => {
   clients
-    .find({ orgs: org }, (error, data) => {
+    .find({ }, (error, data) => {
       if (error) {
         return next(error)
       } else {
