@@ -9,39 +9,43 @@
         <th>Name</th>
         <th>Status</th>
       </tr>
-      <tr v-for="item in list" :key="item.id">
-        <td>{{ item.title }}</td>
-        <td>{{ getStatus() }}</td>
+      <tr v-for="service in activeServices" :key="service.ServiceName">
+        <td>{{ service.ServiceName }}</td>
+        <td>
+          {{ service.isActive ? 'Active' : 'Inactive' }}
+        </td>
       </tr>
     </table>
   </main>
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
-  name: "EmployeeList",
+  name: "ManageServices",
   data() {
-    return { list: [] }
+    return {
+      services: [],
+    };
   },
   mounted() {
-    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=5")
-      .then(resp => {
-        this.list = resp.data;
-        console.log(resp.data);
+    axios
+      .get("http://localhost:3000/services")
+      .then((resp) => {
+        this.services = resp.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
-        this.list = [];
+        this.services = [];
       });
   },
-  methods: {
-    getStatus() {
-      return "Active";
-    }
-  }
-}
+  computed: {
+    activeServices() {
+      return this.services.filter((service) => service.isActive);
+    },
+  },
+};
 </script>
 
 <style scoped>
