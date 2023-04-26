@@ -1,8 +1,9 @@
 <script>
 import { Chart, registerables } from 'chart.js'
+// import { MongoClient } from 'mongodb' // import the MongoClient from the mongodb library
 Chart.register(...registerables)
 
-//Event Name+Event Date, Number of Attendees 
+//Zip Codes 
 export default {
   props: {
     label: {
@@ -17,16 +18,28 @@ export default {
     const borderColor = backgroundColor.map((e) =>
       e.replace(/[\d\.]+\)$/g, '1)')
     )
-    await new Chart(this.$refs.attendanceChart, {
-      type: 'bar',
+
+    // establish a connection to the MongoDB database
+    const client = new MongoClient('mongodb://localhost:3000')
+    await client.connect()
+    const db = client.db('mydatabase')
+
+    // query for zip codes and their associated data
+    const collection = db.collection('test')
+    const zipCodes = await collection.find().toArray()
+    const zipCodeLabels = zipCodes.map((zipCode) => zipCode.code)
+    const zipCodeData = zipCodes.map((zipCode) => zipCode.data)
+
+    await new Chart(this.$refs.attendanceChart2, {
+      type: 'pie',
       data: {
-        labels: this.label,
+        labels: zipCodeLabels,
         datasets: [
           {
             borderWidth: 1,
             backgroundColor: backgroundColor,
             borderColor: borderColor,
-            data: this.chartData
+            data: zipCodeData
           }
         ]
       },
@@ -52,6 +65,7 @@ export default {
         maintainAspectRatio: true
       }
     })
+    await client.close() // close the database connection
   },
   methods: {
     getColor() {
@@ -63,6 +77,6 @@ export default {
 </script>
 <template>
   <div class="shadow-lg rounded-lg overflow-hidden">
-    <canvas class="p-10" ref="attendanceChart"></canvas>
+    <canvas class="p-10" ref="attendanceChart2"></canvas>
   </div>
 </template>
