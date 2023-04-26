@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+const apiURL = import.meta.env.VITE_ROOT_API
+import axios from 'axios'
 
 //defining a store
 export const useLoggedInUserStore = defineStore({
@@ -9,7 +11,7 @@ export const useLoggedInUserStore = defineStore({
     return {
       name: "",
       isLoggedIn: false,
-      role:''
+      role:'',
     }
   },
   // equivalent to methods in components, perfect to define business logic
@@ -40,28 +42,33 @@ export const useLoggedInUserStore = defineStore({
 
 //simulate a login - we will later use our backend to handle authentication
 //created 2 different users : viewer and editor
-function apiLogin(u, p) {
-  let loggedIn = [
-    {
-      name: 'e',
-      password: 'e',
-      role: 'editor'
-    },
-    {
-      name: 'v',
-      password: 'v',
-      role: 'viewer'
-    }
-  ]
-  console.log(loggedIn)
-  for(let i in loggedIn) {
-    if(loggedIn[i].name === u && loggedIn[i].password === p && loggedIn[i].role === 'editor') 
-    return Promise.resolve({ isAllowed:true, role:loggedIn[i].role, name:loggedIn[i].name })
-    if(loggedIn[i].name === u && loggedIn[i].password === p && loggedIn[i].role === 'viewer') 
-    return Promise.resolve({ isAllowed:true, role:loggedIn[i].role, name:loggedIn[i].name })
-  }
-  // if (u === "ed" && p === "ed") return Promise.resolve({ isAllowed: true, name: "John Doe" });
-  // if (p === "ed") return Promise.resolve({ isAllowed: false });
-  return Promise.reject(new Error("invalid credentials")); // this is not working
+function checkDB(u, p) {
+  let data = {UserName: u, Password: p}
+  const verify = axios.post(`${apiURL}/users`, data) 
+  const dataVerified = verify.then((res)=>res.data)
+    return dataVerified
 }
+
+// function apiLogin(u, p) {
+//   let loggedIn = [
+//     {
+//       name: 'e',
+//       password: 'e',
+//       role: 'editor'
+//     },
+//     {
+//       name: 'v',
+//       password: 'v',
+//       role: 'viewer'
+//     }
+//   ]
+async function apiLogin(u, p) {
+  const DB = await checkDB(u, p)
+  if (DB.length > 0) {
+    return Promise.resolve({ Allowed:true, role:DB[0].Role, name:[0].FirstName })
+  }else{
+    return Promise.reject(new Error("invalid credentials")); // this is not working
+  }
+}
+  
 
