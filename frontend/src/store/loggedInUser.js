@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 const apiURL = import.meta.env.VITE_ROOT_API
 import axios from 'axios'
-
+import CryptoJS from 'crypto-js';
 //defining a store
 export const useLoggedInUserStore = defineStore({
   // id is only required for devtools with the Pinia store
   id: 'loggedInUser',
+  
   //central part of the store
   state: () => {
     return {
@@ -20,7 +21,7 @@ export const useLoggedInUserStore = defineStore({
       try {
         const response = await apiLogin(username, password);
         this.$patch({
-          isLoggedIn: response.isAllowed,
+          isLoggedIn: response.allowed,
           name: response.name,
           role: response.role  //added this role to grab the role to determine if editor or viewer
         })
@@ -40,35 +41,28 @@ export const useLoggedInUserStore = defineStore({
   }
 });
 
-//simulate a login - we will later use our backend to handle authentication
-//created 2 different users : viewer and editor
-function checkDB(u, p) {
+
+
+ function checkDB(u, p) {
   let data = {UserName: u, Password: p}
-  const verify = axios.post(`${apiURL}/users`, data) 
+  const verify = axios.post(`${apiURL}/users`, data)
   const dataVerified = verify.then((res)=>res.data)
-    return dataVerified
+  return dataVerified
+}
+// adding the hash to the password
+function hashPwd(entry){
+    return CryptoJS.SHA256(entry).toString()
 }
 
-// function apiLogin(u, p) {
-//   let loggedIn = [
-//     {
-//       name: 'e',
-//       password: 'e',
-//       role: 'editor'
-//     },
-//     {
-//       name: 'v',
-//       password: 'v',
-//       role: 'viewer'
-//     }
-//   ]
 async function apiLogin(u, p) {
-  const DB = await checkDB(u, p)
-  if (DB.length > 0) {
-    return Promise.resolve({ Allowed:true, role:DB[0].Role, name:[0].FirstName })
+  const hashedPassword = await hashPwd(p)
+  console.log('pass', hashedPassword) // added this to be able to see the password's hash value to save to the DB
+  const DB = await checkDB(u, hashedPassword)
+  if(DB.length > 0){
+     return Promise.resolve({ allowed:true, role:DB[0].Role, name:DB[0].FirstName })
   }else{
     return Promise.reject(new Error("invalid credentials")); // this is not working
   }
-}
   
+}
 
