@@ -35,8 +35,7 @@ export const useLoggedInUserStore = defineStore({
         name: "",
         isLoggedIn: false
       });
-      //this.$router.push("/home");
-      // we could do other stuff like redirecting the user
+      
     }
   }
 });
@@ -49,7 +48,8 @@ export const useLoggedInUserStore = defineStore({
   const dataVerified = verify.then((res)=>res.data)
   return dataVerified
 }
-// adding the hash to the password
+// chat-openai.com adding 
+//function to hash the password
 function hashPwd(entry){
     return CryptoJS.SHA256(entry).toString()
 }
