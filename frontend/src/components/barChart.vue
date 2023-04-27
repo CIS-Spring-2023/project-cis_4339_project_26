@@ -64,4 +64,8 @@ export default {
   <div class="shadow-lg rounded-lg overflow-hidden">
     <canvas class="p-10" ref="attendanceChart"></canvas>
   </div>
+<<<<<<< HEAD
 </template>
+=======
+</template>
+>>>>>>> cd552da... this is the final part
