@@ -182,6 +182,30 @@ const eventDataSchema = new Schema(
     collection: 'event'
   }
 )
+const serviceDataSchema = new Schema(
+  {
+    _id: { type: String, default: uuid.v1 },
+    ServiceName: {
+      type: String,
+      required: true
+    },
+    isActive: {
+      type: Boolean,
+      required: true
+    },
+    org: {
+      type: String,
+      required: true
+    },
+    org: {
+      type: String,
+      required: true
+    }
+  },
+  {
+    collection: 'service'
+  }
+)
 
 // create models from mongoose schemas
 const clients = mongoose.model('client', clientDataSchema)
@@ -191,4 +215,4 @@ const users = mongoose.model('user', userDataSchema)
 const services = mongoose.model('service', serviceDataSchema)
 
 // package the models in an object to export
-module.exports = { clients, orgs, events, users, services }
+module.exports = { clients, orgs, events, services }
