@@ -10,17 +10,18 @@
         <th>Status</th>
         <th>Modify</th>
       </tr>
+      <!-- Loop through all services and display them in table rows -->
       <tr v-for="service in services" :key="service.ServiceName">
         <td>{{ service.ServiceName }}</td>
         <td>{{ service.isActive ? 'Active' : 'Inactive' }}</td>
         <td>
+          <!-- Clicking this button will route user to edit service page -->
           <button @click="editService(service._id)">Edit</button>
         </td>
       </tr>
     </table>
   </main>
 </template>
-
 <script>
 import axios from "axios";
 import router from "@/router";
@@ -31,6 +32,7 @@ export default {
     return { services: [] };
   },
   mounted() {
+    // Fetch all services from server and update the services data
     axios
       .get("http://localhost:3000/services")
       .then((resp) => {
@@ -42,13 +44,13 @@ export default {
       });
   },
   methods: {
+    // Route user to edit service page
     editService(id) {
       router.push({ path: `/updateServices/${id}` });
     },
   },
 };
 </script>
-
 <style scoped>
 .main-comp {
   display: flex;
@@ -63,7 +65,6 @@ table {
   max-width: 600px;
   margin-top: 20px;
   margin-bottom: 20px;
-  /* add 20px margin to the bottom of the table */
 }
 
 th,

@@ -1,5 +1,6 @@
 <template>
   <div class="create-service">
+
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
       Update Service
     </h1>
@@ -28,14 +29,17 @@ export default {
   name: "UpdateService",
   data() {
     return {
+      // Initialize the service object
       service: {}
     };
   },
   mounted() {
+    // Fetch the service details by ID
     const serviceId = this.$route.params.id;
     axios
       .get(`http://localhost:3000/services/${serviceId}`)
       .then((resp) => {
+        // Update the service object with fetched details
         this.service = resp.data;
       })
       .catch((error) => {
@@ -43,11 +47,13 @@ export default {
       });
   },
   methods: {
+    // Submit the form data to update the service
     submitForm() {
       axios
         .put(`http://localhost:3000/services/${this.service._id}`, this.service)
         .then(() => {
           console.log("Service updated successfully.");
+          // Redirect to the Manage Services page
           router.push('/manageservices');
         })
         .catch((error) => {
