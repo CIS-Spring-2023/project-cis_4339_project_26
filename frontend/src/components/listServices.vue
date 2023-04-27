@@ -1,5 +1,7 @@
 <template>
+  <!-- Main component -->
   <main class="main-comp">
+
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
       List of Services
     </h1>
@@ -9,6 +11,7 @@
         <th>Name</th>
         <th>Status</th>
       </tr>
+      <!-- Loop through each service and display its name and status -->
       <tr v-for="service in activeServices" :key="service.ServiceName">
         <td>{{ service.ServiceName }}</td>
         <td>
@@ -26,10 +29,11 @@ export default {
   name: "ManageServices",
   data() {
     return {
-      services: [],
+      services: [], // Initialize the services array
     };
   },
   mounted() {
+    // Fetch the services data from the server
     axios
       .get("http://localhost:3000/services")
       .then((resp) => {
@@ -41,6 +45,7 @@ export default {
       });
   },
   computed: {
+    // Filter the services that are active and return them
     activeServices() {
       return this.services.filter((service) => service.isActive);
     },

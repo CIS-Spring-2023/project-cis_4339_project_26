@@ -3,11 +3,14 @@
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10 mb-4">
       Create Service
     </h1>
+    <!-- Form to create a new service -->
     <form @submit.prevent="submitForm">
+      <!-- Input field for service name -->
       <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" id="name" class="form-control" v-model="service.ServiceName" />
       </div>
+      <!-- Dropdown for service status -->
       <div class="form-group">
         <label for="status">Status:</label>
         <select id="status" class="form-control" v-model="service.isActive">
@@ -15,13 +18,11 @@
           <option value=false>Inactive</option>
         </select>
       </div>
+      <!-- Button to create the service -->
       <button type="submit" class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
         Create
       </button>
     </form>
-    <div v-if="showSuccessMessage" class="text-green-500 mt-4">
-      Service created successfully.
-    </div>
   </div>
 </template>
 
@@ -33,20 +34,24 @@ export default {
   name: "CreateService",
   data() {
     return {
+      // Object to hold service details
       service: {
         ServiceName: "",
         isActive: true
       },
+      // Flag to display success message
       showSuccessMessage: false
     };
   },
   methods: {
+    // Method to submit the form and create the service
     submitForm() {
+      // Make a POST request to the API to create the service
       axios
         .post(`http://localhost:3000/services`, this.service)
         .then(() => {
-          console.log("Service created successfully.");
           this.showSuccessMessage = true;
+          // Reset form fields and hide success message after 3 seconds
           this.service = {
             ServiceName: "",
             isActive: true
@@ -54,9 +59,11 @@ export default {
           setTimeout(() => {
             this.showSuccessMessage = false;
           }, 3000);
+          // Navigate back to the ManageServices page
           router.push('/manageservices');
         })
         .catch((error) => {
+          // Log error to console if service creation fails
           console.error(error);
         });
     }
