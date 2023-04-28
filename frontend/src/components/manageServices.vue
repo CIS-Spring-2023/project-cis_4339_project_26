@@ -16,7 +16,7 @@
         <td>{{ service.isActive ? 'Active' : 'Inactive' }}</td>
         <td>
           <!-- Clicking this button will route user to edit service page -->
-          <button @click="editService(service._id)">Edit</button>
+          <button @click="editService(service._id)" style="background-color: #8B0000; color: white;">Edit</button>
         </td>
       </tr>
     </table>
@@ -46,7 +46,7 @@ export default {
   methods: {
     // Route user to edit service page
     editService(id) {
-      router.push({ path: `/updateServices/${id}` });
+      router.push({ path: `/updateservices/${id}` });
     },
   },
 };
