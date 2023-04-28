@@ -191,7 +191,7 @@ const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
 const users = mongoose.model('user', userDataSchema)
-const services = mongoose.model('service', userDataSchema)
+const services = mongoose.model('service', serviceDataSchema)
 
 // package the models in an object to export
 module.exports = { clients, orgs, events, users, services }
