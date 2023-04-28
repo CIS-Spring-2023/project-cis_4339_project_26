@@ -67,7 +67,7 @@ const routes = [
     meta: { requiresLog: true }
   },
   {
-    path: '/updateservices',
+    path: '/updateservices/:id',
     name: 'updateservices',
     component: () => import('../components/updateServices.vue'),
     meta: { requiresAuth: true }
