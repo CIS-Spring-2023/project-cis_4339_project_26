@@ -16,7 +16,8 @@
           <option value=false>Inactive</option>
         </select>
       </div>
-      <button type="submit" class="create-button">Update</button>
+      <!-- <button type="submit" class="create-button">Update</button> -->
+      <button type="submit" style="background-color: #8B0000; color: white;">Update </button>
     </form>
   </div>
 </template>

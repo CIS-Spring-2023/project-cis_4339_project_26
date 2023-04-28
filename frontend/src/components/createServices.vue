@@ -19,7 +19,7 @@
         </select>
       </div>
       <!-- Button to create the service -->
-      <button type="submit" class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+      <button type="submit" style="background-color: #8B0000; color: white;"> 
         Create
       </button>
     </form>
