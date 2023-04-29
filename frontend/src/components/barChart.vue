@@ -2,7 +2,6 @@
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 
-//Event Name+Event Date, Number of Attendees 
 export default {
   props: {
     label: {

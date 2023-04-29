@@ -168,4 +168,16 @@ router.delete('/:id', (req, res, next) => {
   })
 })
 
+// GET number of people  
+router.get('/attendees', (req, res, next) => {
+  events
+    .find({ org: org }, (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        return res.json(data)
+      }
+    })
+})
+
 module.exports = router

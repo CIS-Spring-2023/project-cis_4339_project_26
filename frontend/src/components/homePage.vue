@@ -3,7 +3,8 @@ import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
 import AttendanceChart2 from './barChart2.vue'
-const apiURL = import.meta.env.VITE_ROOT_API
+const apiURL = 'http://localhost:3000';
+
 
 export default {
   components: {
@@ -27,7 +28,7 @@ export default {
       try {
         this.error = null
         this.loading = true
-        const response = await axios.get(`${apiURL}/events/attendance`)
+        const response = await axios.get(`${apiURL}/events/attendees`)
         this.recentEvents = response.data
         this.labels = response.data.map(
           (item) => `${item.name} (${this.formattedDate(item.date)})`
@@ -68,71 +69,7 @@ export default {
     editEvent(eventID) {
       this.$router.push({ name: 'eventdetails', params: { id: eventID } })
     }
-  },
-
-  data() {
-      return {
-        recentEvents: [],
-        labels: [],
-        chartData: [],
-        loading: false,
-        error: null
-      }
-    },
-    mounted() {
-      this.getZipcodeData()
-    },
-    methods: {
-      async getZipcodeData() {
-        try {
-          this.error = null
-          this.loading = true
-          const response = await axios.get(`${apiURL}/client/zip`)
-          this.recentEvents = response.data
-          this.labels = response.data.map(
-          // const zipcode = verify.then((res)=>res.data)
-          // return zipcode
-
-            (item) => `${item.name} (${this.formattedDate(item.date)})`
-          )
-          this.chartData = response.data.map((item) => item.attendees.length)
-        } catch (err) {
-          if (err.response) {
-            // client received an error response (5xx, 4xx)
-            this.error = {
-              title: 'Server Response',
-              message: err.message
-            }
-          } else if (err.request) {
-            // client never received a response, or request never left
-            this.error = {
-              title: 'Unable to Reach Server',
-              message: err.message
-            }
-          } else {
-            // There's probably an error in your code
-            this.error = {
-              title: 'Application Error',
-              message: err.message
-            }
-          }
-        }
-        this.loading = false
-      },
-      formattedDate(datetimeDB) {
-        const dt = DateTime.fromISO(datetimeDB, {
-          zone: 'utc'
-        })
-        return dt
-          .setZone(DateTime.now().zoneName, { keepLocalTime: true })
-          .toLocaleString()
-      },
-      // method to allow click through table to event details
-      editEvent(eventID) {
-        this.$router.push({ name: 'eventdetails', params: { id: eventID } })
-      }
-    }
-  }
+  }}
 </script>
 
 <template>
