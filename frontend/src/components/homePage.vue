@@ -1,6 +1,7 @@
-<script>
+<script>//chat gpt was referenced for error finding and merging issues 
 import { DateTime } from 'luxon'
 import axios from 'axios'
+import Chart from 'chart.js/auto'
 import AttendanceChart from './barChart.vue'
 import AttendanceChart2 from './barChart2.vue'
 const apiURL = 'http://localhost:3000';
@@ -9,7 +10,7 @@ const apiURL = 'http://localhost:3000';
 export default {
   components: {
     AttendanceChart,
-    AttendanceChart2
+    AttendanceChart2 //this is not currently functional and a hard coded version was used instead 
   },
   data() {
     return {
@@ -21,7 +22,39 @@ export default {
     }
   },
   mounted() {
-    this.getAttendanceData()
+    this.getAttendanceData();
+
+    const ctx = document.getElementById('myChart')
+    const myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['77494 ', '77449 ', '77407 ', '77386 ', '77433 ', '77099 '],
+        datasets: [
+          {
+            label: '# of Ppl in Zip Code ',
+            data: [4, 19, 21, 29, 23, 17],
+            backgroundColor: [
+              'rgba(255, 0, 0, 0.7)',
+              'rgba(0, 255, 0, 0.7)',
+              'rgba(255, 255, 0, 0.7)',
+              'rgba(255, 0, 255, 0.7)',
+              'rgba(0, 255, 255, 0.7)',
+              'rgba(0, 0, 255, 0.7)'
+            ],
+            borderColor: [
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)',
+              'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: .25
+          }
+        ]
+      },
+    })
+
   },
   methods: {
     async getAttendanceData() {
@@ -133,11 +166,14 @@ export default {
             <!-- End of error alert -->
           </div>
           <div>
-            <AttendanceChart2
+            <!-- <AttendanceChart2
               v-if="!loading && !error"
               :label="labels"
               :chart-data="chartData"
-            ></AttendanceChart2>
+            ></AttendanceChart2> //this is not currently functional and a hard coded version was used instead-->
+            <br />
+            <canvas id="myChart" width="20" height="20"></canvas>
+            <br /><br />
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
               <p

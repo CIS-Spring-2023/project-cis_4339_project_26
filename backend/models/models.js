@@ -60,7 +60,7 @@ const clientDataSchema = new Schema(
       county: {
         type: String
       },
-      zip: {
+      zipcode: {
         type: String
       }
     },

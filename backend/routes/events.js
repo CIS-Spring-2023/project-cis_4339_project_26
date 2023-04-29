@@ -178,6 +178,6 @@ router.get('/attendees', (req, res, next) => {
         return res.json(data)
       }
     })
-})
+})//modified from original provided code  
 
 module.exports = router

@@ -149,4 +149,18 @@ router.delete('/:id', (req, res, next) => {
   })
 })
 
+// GET number of people  
+router.get('/zipcode', (req, res, next) => {
+  clients.aggregate([
+  { $match: { org: org } },
+  { $group: { _id: "$address.zip", count: { $sum: 1 } } }
+  ], (error, data) => {
+  if (error) {
+  return next(error);
+  } else {
+  return res.json(data);
+  }
+  });
+}); //gave ChatGPT a GET from original provided code  
+
 module.exports = router
