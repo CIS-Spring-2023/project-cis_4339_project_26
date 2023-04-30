@@ -1,8 +1,12 @@
 # Data Platform Project Setup
+The link below is where you can find the Postman documentation.
+
 https://documenter.getpostman.com/view/27106271/2s93eSaFua
 
 
-
+# Username and Password to access site.
+UserName: north Password: smash Role: editor
+UserName: batman Password: sweet  Role: viewer
 
 
 This project has been developed over time by students in the CIS 4339 course.
