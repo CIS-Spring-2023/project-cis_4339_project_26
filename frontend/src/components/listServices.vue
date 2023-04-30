@@ -1,5 +1,7 @@
 <template>
+  <!-- Main component -->
   <main class="main-comp">
+
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
       List of Services
     </h1>
@@ -9,39 +11,46 @@
         <th>Name</th>
         <th>Status</th>
       </tr>
-      <tr v-for="item in list" :key="item.id">
-        <td>{{ item.title }}</td>
-        <td>{{ getStatus() }}</td>
+      <!-- Loop through each service and display its name and status -->
+      <tr v-for="service in activeServices" :key="service.ServiceName">
+        <td>{{ service.ServiceName }}</td>
+        <td>
+          {{ service.isActive ? 'Active' : 'Inactive' }}
+        </td>
       </tr>
     </table>
   </main>
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
-  name: "EmployeeList",
+  name: "ManageServices",
   data() {
-    return { list: [] }
+    return {
+      services: [], // Initialize the services array
+    };
   },
   mounted() {
-    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=5")
-      .then(resp => {
-        this.list = resp.data;
-        console.log(resp.data);
+    // Fetch the services data from the server
+    axios
+      .get("http://localhost:3000/services")
+      .then((resp) => {
+        this.services = resp.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
-        this.list = [];
+        this.services = [];
       });
   },
-  methods: {
-    getStatus() {
-      return "Active";
-    }
-  }
-}
+  computed: {
+    // Filter the services that are active and return them
+    activeServices() {
+      return this.services.filter((service) => service.isActive);
+    },
+  },
+};
 </script>
 
 <style scoped>
