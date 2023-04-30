@@ -9,7 +9,7 @@ const { clients } = require('../models/models')
 // GET 10 most recent clients for org
 router.get('/', (req, res, next) => {
   clients
-    .find({ orgs: org }, (error, data) => {
+    .find({ }, (error, data) => {
       if (error) {
         return next(error)
       } else {
@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
 // GET single client by ID
 router.get('/id/:id', (req, res, next) => {
   // use findOne instead of find to not return array
-  clients.findOne({ _id: req.params.id, orgs: org }, (error, data) => {
+  clients.findOne({ _id: req.params.id }, (error, data) => {
     if (error) {
       return next(error)
     } else if (!data) {
@@ -148,5 +148,19 @@ router.delete('/:id', (req, res, next) => {
     }
   })
 })
+
+// GET number of people  
+router.get('/zipcode', (req, res, next) => {
+  clients.aggregate([
+  { $match: { org: org } },
+  { $group: { _id: "$address.zip", count: { $sum: 1 } } }
+  ], (error, data) => {
+  if (error) {
+  return next(error);
+  } else {
+  return res.json(data);
+  }
+  });
+}); //gave ChatGPT a GET from original provided code  
 
 module.exports = router

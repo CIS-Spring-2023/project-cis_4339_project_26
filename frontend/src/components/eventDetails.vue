@@ -26,7 +26,9 @@ export default {
         },
         description: '',
         attendees: []
-      }
+      },
+      selectedServices: [],
+      activeServices: [],
     }
   },
   created() {
@@ -74,8 +76,20 @@ export default {
         date: { required }
       }
     }
-  }
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/services")
+      .then((resp) => {
+        this.activeServices = resp.data.filter((service) => service.isActive);
+      })
+      .catch((error) => {
+        console.error(error);
+        this.activeServices = [];
+      });
+  },
 }
+
 </script>
 <template>
   <main>
@@ -86,57 +100,71 @@ export default {
     </div>
     <div class="px-10 py-20">
       <form @submit.prevent="handleSubmitForm">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
-          <h2 class="text-2xl font-bold">Event Details</h2>
-          <!-- form field -->
-          <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Event Name</span>
-              <span style="color: #ff0000">*</span>
-              <input type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="event.name" />
-              <span class="text-black" v-if="v$.event.name.$error">
-                <p class="text-red-700" v-for="error of v$.event.name.$errors" :key="error.$uid">
-                  {{ error.$message }}!
-                </p>
-              </span>
-            </label>
-          </div>
-
-          <!-- form field -->
-          <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Date</span>
-              <span style="color: #ff0000">*</span>
-              <input type="date"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="event.date" />
-              <span class="text-black" v-if="v$.event.date.$error">
-                <p class="text-red-700" v-for="error of v$.event.date.$errors" :key="error.$uid">
-                  {{ error.$message }}!
-                </p>
-              </span>
-            </label>
-          </div>
-
-          <div></div>
-          <div></div>
-          <!-- form field -->
-          <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Description</span>
-              <!-- added missing v-model connection -->
-              <textarea
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                rows="2" v-model="event.description"></textarea>
-            </label>
-          </div>
-
-          <div></div>
-          <div></div>
-          <div></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"></div>
+        <h2 class="text-2xl font-bold">Event Details</h2>
+        <!-- form field -->
+        <div class="flex flex-col">
+          <label class="block">
+            <span class="text-gray-700">Event Name</span>
+            <span style="color: #ff0000">*</span>
+            <input type="text"
+              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              v-model="event.name" />
+            <span class="text-black" v-if="v$.event.name.$error">
+              <p class="text-red-700" v-for="error of v$.event.name.$errors" :key="error.$uid">
+                {{ error.$message }}!
+              </p>
+            </span>
+          </label>
         </div>
+
+        <!-- form field -->
+        <div class="flex flex-col">
+          <label class="block">
+            <span class="text-gray-700">Date</span>
+            <span style="color: #ff0000">*</span>
+            <input type="date"
+              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              v-model="event.date" />
+            <span class="text-black" v-if="v$.event.date.$error">
+              <p class="text-red-700" v-for="error of v$.event.date.$errors" :key="error.$uid">
+                {{ error.$message }}!
+              </p>
+            </span>
+          </label>
+        </div>
+
+        <div></div>
+        <div></div>
+        <!-- form field -->
+        <div class="flex flex-col">
+          <label class="block">
+            <span class="text-gray-700">Description</span>
+            <!-- added missing v-model connection -->
+            <textarea
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              rows="2" v-model="event.description"></textarea>
+          </label>
+        </div>
+
+        <div></div>
+        <div></div>
+        <div></div>
+        <!-- form field -->
+        <div class="flex flex-col grid-cols-3">
+          <label><strong>Services Offered at Event</strong></label>
+          <br>
+          <ul >
+            <li v-for="service in activeServices" :key="service._id">
+              <label>
+                <input type="checkbox" class="mr-1 ml-1" v-model="selectedServices" :value="service.ServiceName" />
+                {{ service.ServiceName }}
+              </label>
+            </li>
+          </ul>
+        </div>
+      
+
         <!-- grid container -->
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <h2 class="text-2xl font-bold">Address</h2>

@@ -10,44 +10,47 @@
         <th>Status</th>
         <th>Modify</th>
       </tr>
-      <tr v-for="item in list" :key="item.id">
-        <td>{{ item.title }}</td>
-        <td>{{ item.completed ? 'Active' : 'Inactive' }}</td>
-        <td><button @click="editService(item.id)">Edit</button></td>
+      <!-- Loop through all services and display them in table rows -->
+      <tr v-for="service in services" :key="service.ServiceName">
+        <td>{{ service.ServiceName }}</td>
+        <td>{{ service.isActive ? 'Active' : 'Inactive' }}</td>
+        <td>
+          <!-- Clicking this button will route user to edit service page -->
+          <button @click="editService(service._id)" style="background-color: #8B0000; color: white;">Edit</button>
+        </td>
       </tr>
     </table>
   </main>
 </template>
-
 <script>
 import axios from "axios";
 import router from "@/router";
 
 export default {
-  name: "EmployeeList",
+  name: "ManageServices",
   data() {
-    return { list: [] };
+    return { services: [] };
   },
   mounted() {
+    // Fetch all services from server and update the services data
     axios
-      .get("https://jsonplaceholder.typicode.com/todos?_limit=5")
+      .get("http://localhost:3000/services")
       .then((resp) => {
-        this.list = resp.data;
-        console.log(resp.data);
+        this.services = resp.data;
       })
       .catch((error) => {
         console.error(error);
-        this.list = [];
+        this.services = [];
       });
   },
   methods: {
-    editService(serviceId) {
-      router.push({ path: `/updateservices?id=${serviceId}` });
+    // Route user to edit service page
+    editService(id) {
+      router.push({ path: `/updateservices/${id}` });
     },
   },
 };
 </script>
-
 <style scoped>
 .main-comp {
   display: flex;
@@ -61,6 +64,7 @@ table {
   width: 100%;
   max-width: 600px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 th,
@@ -77,9 +81,3 @@ tr:nth-child(even) {
   background-color: #faf6f6;
 }
 </style>
-Make sure to also update your router/index.js file as we've modified the path for the /updateservices route.
-
-
-
-
-
