@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <script>//chat gpt was referenced for error finding and merging issues 
 import { DateTime } from 'luxon'
 import axios from 'axios'
@@ -26,18 +25,6 @@ export default {
     this.getAttendanceData();
 
     const ctx = document.getElementById('myChart')
-=======
-<script>
-import { DateTime } from 'luxon'
-import axios from 'axios'
-const apiURL = import.meta.env.VITE_ROOT_API
-import Chart from 'chart.js/auto'
-
-export default {
-  mounted() {
-    const ctx = document.getElementById('myChart')
-
->>>>>>> cd552da... this is the final part
     const myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -67,7 +54,6 @@ export default {
         ]
       },
     })
-<<<<<<< HEAD
 
   },
   methods: {
@@ -117,16 +103,11 @@ export default {
       this.$router.push({ name: 'eventdetails', params: { id: eventID } })
     }
   }}
-=======
-  }
-}
->>>>>>> cd552da... this is the final part
 </script>
 
 <template>
   <main>
     <div>
-<<<<<<< HEAD
       <h1
         class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
       >
@@ -136,13 +117,6 @@ export default {
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
       >
-=======
-      <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
-        Welcome
-      </h1>
-      <br />
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
->>>>>>> cd552da... this is the final part
         <div class="ml-10"></div>
         <div class="flex flex-col col-span-2">
           <table class="min-w-full shadow-md rounded">
@@ -154,21 +128,16 @@ export default {
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-300">
-<<<<<<< HEAD
               <tr
                 @click="editEvent(event._id)"
                 v-for="event in recentEvents"
                 :key="event._id"
               >
-=======
-              <tr @click="editEvent(event._id)" v-for="event in recentEvents" :key="event._id">
->>>>>>> cd552da... this is the final part
                 <td class="p-2 text-left">{{ event.name }}</td>
                 <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
               </tr>
             </tbody>
-<<<<<<< HEAD
           </table>
           <div>
             <AttendanceChart
@@ -200,52 +169,16 @@ export default {
             <!-- <AttendanceChart2
               v-if="!loading && !error"
               :label="labels"
-              :chart-data="chartData"
-            ></AttendanceChart2> //this is not currently functional and a hard coded version was used instead-->
-=======
-
-            <tbody class="divide-y divide-gray-300">
-              <tr>
-                <td class="p-2 text-left">Event 1</td>
-                <td class="p-2 text-left">3/3/2023</td>
-                <td class="p-2 text-left">3</td>
-              </tr>
-              <tr>
-                <td class="p-2 text-left">Event 2</td>
-                <td class="p-2 text-left">3/25/2023</td>
-                <td class="p-2 text-left">5</td>
-              </tr>
-              <tr>
-                <td class="p-2 text-left">Event 3</td>
-                <td class="p-2 text-left">4/7/2023</td>
-                <td class="p-2 text-left">7</td>
-              </tr>
-              <tr>
-                <td class="p-2 text-left">Event 4</td>
-                <td class="p-2 text-left">4/18/2023</td>
-                <td class="p-2 text-left">6</td>
-              </tr>
-              <tr>
-                <td class="p-2 text-left">Event 5</td>
-                <td class="p-2 text-left">4/30/2023</td>
-                <td class="p-2 text-left">4</td>
-              </tr>
-            </tbody>
-          </table>
-          <div>
->>>>>>> cd552da... this is the final part
+              :clients.address.zipcode="chartData"
+            ></AttendanceChart2> //this is not currently functional and a hard coded version was used instead -->
             <br />
             <canvas id="myChart" width="20" height="20"></canvas>
             <br /><br />
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
-<<<<<<< HEAD
               <p
                 class="text-6xl font-bold text-center text-gray-500 animate-pulse"
               >
-=======
-              <p class="text-6xl font-bold text-center text-gray-500 animate-pulse">
->>>>>>> cd552da... this is the final part
                 Loading...
               </p>
             </div>
@@ -262,16 +195,9 @@ export default {
             </div>
             <!-- End of error alert -->
           </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> cd552da... this is the final part
         </div>
       </div>
     </div>
   </main>
-<<<<<<< HEAD
 </template>
-=======
-</template>
->>>>>>> cd552da... this is the final part

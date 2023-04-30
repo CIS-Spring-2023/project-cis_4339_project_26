@@ -98,7 +98,8 @@ const clientDataSchema = new Schema(
         type: String
       },
       zipcode: {
-        type: String
+        type: String,
+        required: true
       }
     },
     orgs: {
