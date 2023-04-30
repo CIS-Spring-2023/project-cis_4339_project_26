@@ -9,7 +9,7 @@ const { events } = require('../models/models')
 // GET 10 most recent events for org
 router.get('/', (req, res, next) => {
   events
-    .find({ org: org }, (error, data) => {
+    .find({  }, (error, data) => {
       if (error) {
         return next(error)
       } else {
