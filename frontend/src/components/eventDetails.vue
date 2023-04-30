@@ -154,16 +154,15 @@ export default {
         <div class="flex flex-col grid-cols-3">
           <label><strong>Services Offered at Event</strong></label>
           <br>
-          <ul >
+          <ul>
             <li v-for="service in activeServices" :key="service._id">
               <label>
-                <input type="checkbox" class="mr-1 ml-1" v-model="selectedServices" :value="service.ServiceName" />
+                <input type="checkbox" v-model="selectedServices" :value="service.ServiceName" />
                 {{ service.ServiceName }}
               </label>
             </li>
           </ul>
         </div>
-      
 
         <!-- grid container -->
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
