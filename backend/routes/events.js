@@ -9,7 +9,7 @@ const { events } = require('../models/models')
 // GET 10 most recent events for org
 router.get('/', (req, res, next) => {
   events
-    .find({ org: org }, (error, data) => {
+    .find({  }, (error, data) => {
       if (error) {
         return next(error)
       } else {
@@ -30,7 +30,7 @@ router.get('/id/:id', (req, res, next) => {
     } else if (!data) {
       res.status(400).send('Event not found')
     } else {
-      res.json(data)
+      return res.json(data)
     }
   })
 })
@@ -167,5 +167,17 @@ router.delete('/:id', (req, res, next) => {
     }
   })
 })
+
+// GET number of people  
+router.get('/attendees', (req, res, next) => {
+  events
+    .find({ org: org }, (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        return res.json(data)
+      }
+    })
+})//modified from original provided code  
 
 module.exports = router

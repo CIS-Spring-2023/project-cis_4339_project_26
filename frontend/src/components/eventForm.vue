@@ -3,16 +3,13 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
-
 export default {
   name: "EmployeeList",
-
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
     return {
-      list: [],
       // removed unnecessary extra array to track services
       event: {
         name: '',
@@ -26,7 +23,9 @@ export default {
           zip: ''
         },
         description: ''
-      }
+      },
+      selectedServices: [],
+      activeServices: [],
     }
   },
   methods: {
@@ -57,16 +56,16 @@ export default {
     }
   },
   mounted() {
-    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=5")
-      .then(resp => {
-        this.list = resp.data;
-        console.log(resp.data);
+    axios
+      .get("http://localhost:3000/services")
+      .then((resp) => {
+        this.activeServices = resp.data.filter((service) => service.isActive);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
-        this.list = [];
+        this.activeServices = [];
       });
-  }
+  },
 }
 </script>
 <template>
@@ -135,9 +134,11 @@ export default {
             <label><strong>Services Offered at Event</strong></label>
             <br>
             <ul>
-              <li v-for="item in list" :key="item.id">
-                <input type="checkbox" id="service-{{ item.id }}" :value="item.title" style="margin-right: 10px;">
-                <label for="service-{{ item.id }}">{{ item.title }}</label>
+              <li v-for="service in activeServices" :key="service._id">
+                <label>
+                  <input type="checkbox" v-model="selectedServices" :value="service.ServiceName" />
+                  {{ service.ServiceName }}
+                </label>
               </li>
             </ul>
           </div>

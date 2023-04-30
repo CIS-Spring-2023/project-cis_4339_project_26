@@ -1,4 +1,4 @@
- For editor, the username is e and the password is e.
+For editor, the username is e and the password is e.
 For viewer, the username is v and the password is v.
 
 Data Platform Frontend
