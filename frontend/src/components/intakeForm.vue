@@ -90,7 +90,8 @@ export default {
         lastName: { required, alpha },
         email: { email },
         address: {
-          city: { required }
+          city: { required },
+          zip: { required }
         },
         phoneNumber: {
           primary: { required, numeric }
